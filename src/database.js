@@ -49,6 +49,8 @@ export class Database {
     if (rowIndex > -1) {
       this.#database[table][rowIndex] = { id, ...data }
       this.#persist()
+    } else {
+      console.log('Task não encontrada!')
     }
   }
 

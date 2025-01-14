@@ -44,11 +44,22 @@ export const routes = [
       const { id } = req.params
       const { title, description } = req.body
 
-      database.update('tasks', id, {
-        title,
-        description,
-        updated_at: new Date(),
-      })
+      const updates = {}
+
+      if (title) {
+        updates.title = title
+      }
+
+      if (description) {
+        updates.description = description
+      }
+
+      if (Object.keys(updates).length > 0) {
+        updates.updated_at = new Date()
+
+        database.update('tasks', id, updates)
+        return res.writeHead(200).end()
+      }
 
       return res.writeHead(204).end()
     },
